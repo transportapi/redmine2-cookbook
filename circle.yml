@@ -1,0 +1,12 @@
+machine:
+  services:
+    - docker
+  timezone:
+    Europe/London
+checkout:
+  post:
+    - ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+test:
+  override:
+    - bundle exec kitchen test -c 4 --destroy=always:
+        timeout: 1200
