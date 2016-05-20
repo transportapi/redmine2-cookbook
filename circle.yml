@@ -9,4 +9,4 @@ checkout:
 test:
   override:
     - bundle exec kitchen test -c 4 --destroy=always:
-        timeout: 1200
+        timeout: 12000
