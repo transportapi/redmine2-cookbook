@@ -4,9 +4,9 @@ driver:
   rackspace_username: <%= ENV['RACKSPACE_USERNAME'] %>
   rackspace_api_key: <%= ENV['RACKSPACE_API_KEY'] %>
   rackspace_region: 'lon'
-  flavor_id: 'performance1-8'
+  flavor_id: 'performance1-1'
   privileged: true
-  require_chef_omnibus: 12.5.1
+  require_chef_omnibus: 12.7.2
 
 provisioner:
   name: chef_zero
