@@ -52,8 +52,6 @@ suites:
         server_debian_password: q654321
   - name: postgresql
     run_list:
-      - recipe[apt]
-      - recipe[build-essential::default]
       - recipe[iptables]
       - recipe[openssh::iptables]
       - recipe[postgresql::server]
