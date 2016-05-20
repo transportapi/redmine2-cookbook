@@ -71,5 +71,8 @@ suites:
       postgresql:
         password:
           postgres: q654321
+      openssh:
+        server:
+          permit_root_login: "yes"
       build_essential:
         compiletime: true
