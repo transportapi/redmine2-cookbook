@@ -234,15 +234,15 @@ GEM
     inflecto (0.0.2)
     ipaddress (0.8.3)
     json (1.8.3)
+    kitchen-docker (2.1.0)
+      test-kitchen (>= 1.0.0)
     kitchen-rackspace (0.20.0)
       fog (~> 1.18)
       test-kitchen (~> 1.1)
-    kitchen-vagrant (0.15.0)
-      test-kitchen (~> 1.0)
     knife-spec (1.0.0)
       chef
     libyajl2 (1.2.0)
-    mini_portile (0.6.2)
+    mini_portile2 (2.0.0)
     minitar (0.5.4)
     mixlib-authentication (1.4.0)
       mixlib-log
@@ -255,7 +255,7 @@ GEM
     mixlib-log (1.6.0)
     mixlib-shellout (2.2.6)
     molinillo (0.4.5)
-    multi_json (1.10.1)
+    multi_json (1.12.1)
     multipart-post (2.0.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -267,8 +267,8 @@ GEM
       net-ssh-gateway (>= 1.2.0)
     net-telnet (0.1.1)
     nio4r (1.2.1)
-    nokogiri (1.6.6.2)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7.2)
+      mini_portile2 (~> 2.0.0.rc2)
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
     ohai (8.16.0)
@@ -330,7 +330,7 @@ GEM
     rspec_junit_formatter (0.2.3)
       builder (< 4)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rufus-lru (1.0.5)
+    rufus-lru (1.1.0)
     safe_yaml (1.0.4)
     sawyer (0.7.0)
       addressable (>= 2.3.5, < 2.5)
@@ -362,7 +362,7 @@ GEM
     thor (0.19.1)
     timers (4.0.4)
       hitimes
-    treetop (1.5.3)
+    treetop (1.6.5)
       polyglot (~> 0.3)
     trollop (2.1.2)
     uuidtools (2.1.5)
@@ -381,13 +381,12 @@ DEPENDENCIES
   chef (~> 12.7.2)
   chefspec (~> 4.6.0)
   emeril
-  foodcritic
+  foodcritic (~> 4.0.0)
+  kitchen-docker (~> 2.1.0)
   kitchen-rackspace (~> 0.20.0)
-  kitchen-vagrant
   knife-spec (~> 1.0.0)
-  rake
   serverspec (~> 2.31.0)
   test-kitchen (~> 1.6.0)
 
 BUNDLED WITH
-   1.11.2
+   1.12.0
