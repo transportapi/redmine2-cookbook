@@ -9,23 +9,23 @@ describe user('redmine') do
 end
 
 describe command('ruby -v') do
-  let(:path) { '/home/redmine/.rbenv/shims:$PATH' }
-  its(:stdout) { should match(/ruby 1\.9\.3p484.*/) }
+  let(:path) { '/opt/rbenv/shims:$PATH' }
+  its(:stdout) { should match(/ruby 2\.3\.0p0.*/) }
 end
 
 describe package('bundler') do
-  let(:path) { '/home/redmine/.rbenv/shims:$PATH' }
+  let(:path) { '/opt/rbenv/shims:$PATH' }
   it { should be_installed.by('gem') }
 end
 
-describe file('/home/redmine/redmine-2.6.1') do
+describe file('/home/redmine/redmine-3.2.0') do
   it { should be_directory }
 end
 
 describe file('/home/redmine/redmine') do
-  it { should be_linked_to '/home/redmine/redmine-2.6.1' }
+  it { should be_linked_to '/home/redmine/redmine-3.2.0' }
 end
 
 describe process('ruby') do
-  its(:args) { should match(/script\/rails s thin -p 3000/) }
+  its(:args) { should eq "ruby bin/rails s thin -b 127.0.0.1 -p 3000" }
 end
