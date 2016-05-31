@@ -51,8 +51,8 @@ suites:
         server_repl_password: q654321
         server_debian_password: q654321
   - name: postgresql
-    data_bags_path: "test/integration/mysql/data_bags"
-    encrypted_data_bag_secret_key_path: "test/integration/mysql/data_bag_key"
+    data_bags_path: "test/integration/postgresql/data_bags"
+    encrypted_data_bag_secret_key_path: "test/integration/postgresql/data_bag_key"
     run_list:
       - recipe[iptables]
       - recipe[openssh::iptables]
