@@ -30,7 +30,7 @@ if [true, 'true'].include? node[:redmine][:create_db]
 
   postgresql_database_user node[:redmine][:db][:username] do
     connection connection_info
-    password   node[:redmine][:db][:password]
+    password   data_bag_item('postgresql', node[:redmine][:db][:username])['password']
     encoding   'utf8'
     action     :create
   end
