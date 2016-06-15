@@ -10,7 +10,7 @@ production:
   database: redmine
   host: <%= @database_server %>
   username: <%= node[:redmine][:db][:username] %>
-  password: <%= node[:redmine][:db][:password] %>
+  password: <%= @password %>
   encoding: utf8
 <% when 'sqlite' -%>
 production:
@@ -22,7 +22,7 @@ production:
   database: redmine
   host: <%= @database_server %>
   username: <%= node[:redmine][:db][:username] %>
-  password: <%= node[:redmine][:db][:password] %>
+  password: <%= @password %>
   encoding: utf8
 <% end -%>
 
