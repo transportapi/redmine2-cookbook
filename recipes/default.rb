@@ -86,8 +86,8 @@ template "#{node[:redmine][:home]}/redmine-#{node[:redmine][:version]}/config/da
   source 'database.yml.erb'
   owner node[:redmine][:user]
   variables {
-    database_server: node[:redmine][:db][:hostname],
-    password: data_bag_item('postgresql', 'redmine')['password']
+    'database_server': node[:redmine][:db][:hostname],
+    'password': data_bag_item('postgresql', 'redmine')['password']
   }
   mode '0664'
 end
