@@ -76,8 +76,6 @@ end
 case node[:redmine][:db][:type]
   when 'sqlite'
     include_recipe 'redmine2::sqlite'
-  when 'mysql'
-    include_recipe 'redmine2::mysql'
   when 'postgresql'
     include_recipe 'redmine2::postgresql'
 end
@@ -118,11 +116,9 @@ end
 
 bundle_install_command = case node[:redmine][:db][:type]
   when 'sqlite'
-    "#{bundle_command} install --path vendor/bundle --without development test mysql postgresql rmagick"
-  when 'mysql'
-    "#{bundle_command} install --path vendor/bundle --without development test postgresql sqlite rmagick"
+    "#{bundle_command} install --path vendor/bundle --without development test postgresql rmagick"
   when 'postgresql'
-    "#{bundle_command} install --path vendor/bundle --without development test mysql sqlite rmagick"
+    "#{bundle_command} install --path vendor/bundle --without development test sqlite rmagick"
 end
 
 execute bundle_install_command do

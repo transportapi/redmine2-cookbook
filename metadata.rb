@@ -14,8 +14,6 @@ depends 'nginx'
 depends 'runit'
 depends 'database', '~> 4.0.9'
 depends 'postgresql'
-depends 'mysql', '< 6.0' # before recipes removed
-depends 'mysql-chef_gem', '< 1.0' # transitive dependency, before recipes removed
 depends 'sqlite'
 depends 'certificate'
 depends 'iptables'
@@ -72,7 +70,7 @@ attribute 'redmine/db',
 attribute 'redmine/db/type',
           display_name:    'Redmine DB type',
           description:     'Type of redmine database',
-          choice:          %w(sqlite postgresql mysql),
+          choice:          %w(sqlite postgresql),
           default:         'postgresql',
           recipes:         ['redmine2::default']
 

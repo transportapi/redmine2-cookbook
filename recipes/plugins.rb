@@ -24,11 +24,9 @@ bundle_command = "/opt/rbenv/shims/bundle"
 rake_command = "#{bundle_command} exec /opt/rbenv/shims/rake"
 bundle_install_command = case node[:redmine][:db][:type]
   when 'sqlite'
-    "#{bundle_command} install --path vendor/bundle --without development test mysql postgresql rmagick"
-  when 'mysql'
-    "#{bundle_command} install --path vendor/bundle --without development test postgresql sqlite rmagick"
+    "#{bundle_command} install --path vendor/bundle --without development test postgresql rmagick"
   when 'postgresql'
-    "#{bundle_command} install --path vendor/bundle --without development test mysql sqlite rmagick"
+    "#{bundle_command} install --path vendor/bundle --without development test sqlite rmagick"
 end
 
 execute bundle_install_command do
