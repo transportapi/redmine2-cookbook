@@ -15,3 +15,5 @@ default[:redmine][:db][:type]     = 'sqlite'
 default[:redmine][:db][:hostname] = 'localhost'
 default[:redmine][:db][:dbname]   = 'redmine'
 default[:redmine][:db][:username] = 'redmine'
+
+default['postgresql']['pg_gem']['version'] = '0.21.0'
