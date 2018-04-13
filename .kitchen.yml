@@ -1,16 +1,25 @@
 ---
 driver:
-  name: rackspace
-  rackspace_username: <%= ENV['RACKSPACE_USERNAME'] %>
-  rackspace_api_key: <%= ENV['RACKSPACE_API_KEY'] %>
-  rackspace_region: 'lon'
-  flavor_id: 'performance1-1'
-  privileged: true
-  require_chef_omnibus: 12.7.2
+  name: ec2
+  region: eu-west-2
+  instance_type: t2.medium
+  require_chef_omnibus: 13.8.5
+
+transport:
+  name: sftp
+  ssh_key: ~/.ssh/<%= ENV['AWS_SSH_KEY_ID'] %>
 
 provisioner:
   name: chef_zero
   data_path: test/shared
+
+verifier:
+  name: busser
+  version: 0.6.0
+
+common: &common
+  roles_path: roles
+  encrypted_data_bag_secret_key_path: 'test/integration/postgresql/data_bag_key'
 
 platforms:
   - name: ubuntu-14.04
@@ -19,8 +28,7 @@ platforms:
 
 suites:
   - name: default
-    data_bags_path: "test/integration/mysql/data_bags"
-    encrypted_data_bag_secret_key_path: "test/integration/mysql/data_bag_key"
+    data_bags_path: "test/integration/postgresql/data_bags"
     run_list:
       - recipe[iptables]
       - recipe[openssh::iptables]
@@ -32,27 +40,9 @@ suites:
         db:
           type: sqlite
         ssl_data_bag_name: redmine_example_com
-  - name: mysql
-    data_bags_path: "test/integration/mysql/data_bags"
-    encrypted_data_bag_secret_key_path: "test/integration/mysql/data_bag_key"
-    run_list:
-      - recipe[iptables]
-      - recipe[openssh::iptables]
-      - recipe[redmine2]
-      - recipe[redmine2::iptables]
-    attributes:
-      redmine:
-        host: redmine.dev
-        db:
-          type: mysql
-        ssl_data_bag_name: redmine_example_com
-      mysql:
-        server_root_password: q654321
-        server_repl_password: q654321
-        server_debian_password: q654321
+    <<: *common
   - name: postgresql
     data_bags_path: "test/integration/postgresql/data_bags"
-    encrypted_data_bag_secret_key_path: "test/integration/postgresql/data_bag_key"
     run_list:
       - recipe[iptables]
       - recipe[openssh::iptables]
@@ -78,3 +68,4 @@ suites:
           permit_root_login: "yes"
       build_essential:
         compiletime: true
+    <<: *common

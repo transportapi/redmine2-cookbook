@@ -1,12 +1,16 @@
 machine:
-  services:
-    - docker
   timezone:
     Europe/London
+
 checkout:
   post:
-    - ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+    - echo -e $AWS_SSH_PRIVATE_KEY > ~/.ssh/$AWS_SSH_KEY_ID
+    - mkdir ~/.berkshelf
+    - |
+      echo "{\"github\":[{\"access_token\": \"$GITHUB_ACCESS_TOKEN\"}]}" \
+        > ~/.berkshelf/config.json
+
 test:
   override:
-    - bundle exec kitchen test -c 4 --destroy=always:
-        timeout: 12000
+    - bundle exec kitchen test -c 2 --destroy=always:
+        timeout: 1200

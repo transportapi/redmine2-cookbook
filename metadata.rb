@@ -9,17 +9,17 @@ version          '2.0.2'
 conflicts 'redmine'
 
 depends 'rbenv'      # https://github.com/aminin/chef-rbenv
-depends 'ruby_build' # https://github.com/fnichol/chef-ruby_build
+depends 'ruby_build', '~> 1.1.0' # https://github.com/fnichol/chef-ruby_build
 depends 'nginx'
 depends 'runit'
 depends 'database', '~> 4.0.9'
-depends 'postgresql'
-depends 'mysql', '< 6.0' # before recipes removed
-depends 'mysql-chef_gem', '< 1.0' # transitive dependency, before recipes removed
+depends 'postgresql', '~> 6.1.1'
 depends 'sqlite'
 depends 'certificate'
 depends 'iptables'
 depends 'logrotate', '~> 1.9.2'
+depends 'build-essential', '~> 2.2.4'
+depends 'chef-vault', '~> 2.1.0'
 
 supports 'ubuntu'
 
@@ -72,7 +72,7 @@ attribute 'redmine/db',
 attribute 'redmine/db/type',
           display_name:    'Redmine DB type',
           description:     'Type of redmine database',
-          choice:          %w(sqlite postgresql mysql),
+          choice:          %w(sqlite postgresql),
           default:         'postgresql',
           recipes:         ['redmine2::default']
 
