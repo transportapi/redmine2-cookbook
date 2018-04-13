@@ -22,7 +22,7 @@ verifier:
 
 common: &common
   roles_path: roles
-  encrypted_data_bag_secret_key_path: 'encrypted_data_bag_secret'
+  encrypted_data_bag_secret_key_path: 'test/integration/postgresql/data_bag_key'
 
 platforms:
   - name: ubuntu-14.04
