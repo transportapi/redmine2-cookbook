@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/transportapi/transportapi-base-cookbook
+    parallelism: 1
+    shell: /bin/bash --login
+    docker:
+    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
+    steps:
+    - checkout
+    - run: echo -e $AWS_SSH_PRIVATE_KEY > ~/.ssh/$AWS_SSH_KEY_ID
+    - run: mkdir ~/.berkshelf
+    - run: gem install bundler --version '= 1.14.3'
+    - run: |
+        echo "{\"github\":[{\"access_token\": \"$GITHUB_ACCESS_TOKEN\"}]}" \
+          > ~/.berkshelf/config.json
+    - restore_cache:
+        keys:
+        - v1-dep-{{ .Branch }}-
+        - v1-dep-master-
+        - v1-dep-
+    - run: 'bundle install --path=vendor/bundle --jobs=4 --retry=3 '
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - vendor/bundle
+    # Test
+    - run:
+        command: bundle exec kitchen test -c 4 --destroy=always
+        no_output_timeout: 1200s
