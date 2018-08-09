@@ -1,8 +1,6 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/transportapi/transportapi-base-cookbook
-    parallelism: 1
     shell: /bin/bash --login
     docker:
     - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
@@ -17,15 +15,25 @@ jobs:
           > ~/.berkshelf/config.json
     - restore_cache:
         keys:
-        - v1-dep-{{ .Branch }}-
-        - v1-dep-master-
-        - v1-dep-
+        - bundle-v1-{{ .Branch }}-
+        - bundle-v1-master-
+        - bundle-v1-
     - run: 'bundle install --path=vendor/bundle --jobs=4 --retry=3 '
     - save_cache:
-        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        key: bundle-v1-{{ .Branch }}-{{ epoch }}
         paths:
         - vendor/bundle
     # Test
+    - restore_cache:
+        keys:
+        - cookbooks-v1-{{ .Branch }}-
+        - cookbooks-v1-master-
+        - cookbooks-v1-
     - run:
         command: bundle exec kitchen test -c 4 --destroy=always
         no_output_timeout: 1200s
+    - save_cache:
+        key: cookbooks-v1-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/.berkshelf/cookbooks
+
