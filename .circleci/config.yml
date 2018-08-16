@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    shell: /bin/bash --login
+    docker:
+    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      command: /sbin/init
+    steps:
+    - checkout
+    - run: echo -e $AWS_SSH_PRIVATE_KEY > ~/.ssh/$AWS_SSH_KEY_ID
+    - run: mkdir ~/.berkshelf
+    - run: gem install bundler --version '= 1.14.3'
+    - run: |
+        echo "{\"github\":[{\"access_token\": \"$GITHUB_ACCESS_TOKEN\"}]}" \
+          > ~/.berkshelf/config.json
+    - restore_cache:
+        keys:
+        - bundle-v1-{{ .Branch }}-
+        - bundle-v1-master-
+        - bundle-v1-
+    - run: 'bundle install --path=vendor/bundle --jobs=4 --retry=3 '
+    - save_cache:
+        key: bundle-v1-{{ .Branch }}-{{ epoch }}
+        paths:
+        - vendor/bundle
+    # Test
+    - restore_cache:
+        keys:
+        - cookbooks-v1-{{ .Branch }}-
+        - cookbooks-v1-master-
+        - cookbooks-v1-
+    - run:
+        command: bundle exec kitchen test -c 4 --destroy=always
+        no_output_timeout: 1200s
+    - save_cache:
+        key: cookbooks-v1-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/.berkshelf/cookbooks
+
