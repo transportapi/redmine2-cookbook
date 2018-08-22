@@ -22,7 +22,7 @@ common: &common
   encrypted_data_bag_secret_key_path: 'test/integration/postgresql/data_bag_key'
 
 platforms:
-  - name: ubuntu-14.04
+  - name: ubuntu-16.04
     run_list:
       - recipe[apt]
 
